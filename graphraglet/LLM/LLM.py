@@ -1,3 +1,4 @@
+
 from typing import List
 from scipy.spatial.distance import cosine
 
@@ -13,7 +14,7 @@ class LLM:
         embedding2 = self.get_embedding(text2)
         return cosine(embedding1, embedding2)
 
-    def get_completion(self, text: str) -> str:
+    def prompt(self, text: str) -> str:
         """Prompt the LLM to generate a response."""
         pass
 
