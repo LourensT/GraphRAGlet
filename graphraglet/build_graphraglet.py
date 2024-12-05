@@ -1,10 +1,13 @@
+from graphraglet.LLM.LLM import LLM
+from graphraglet.GraphRAGlet import GraphRAGlet
+
 from typing import List
-from itertools import combinations
 from scipy.spatial.distance import cosine
 import networkx as nx
+import numpy as np
 
-from graphraglet.LLM import LLM
-from graphraglet.GraphRAGlet import GraphRAGlet
+import logging
+logger = logging.getLogger("GraphRAGlet")
 
 def build_knowledge_graph(text_units: List[str], llm : LLM, threshold: float = 0.8) -> List[tuple[int, int]]:
     """
@@ -22,8 +25,12 @@ def build_knowledge_graph(text_units: List[str], llm : LLM, threshold: float = 0
     # get embeddings for each text unit
     embeddings = {text_unit : llm.get_embedding(text_unit) for text_unit in text_units}
 
-    # calculate similarity between text units
-    similarities = [cosine(embeddings[text_unit1], embeddings[text_unit2]) for text_unit1, text_unit2 in combinations(text_units, 2)]
+    # create the similarity matrix (upper triangular)
+    similarities = np.zeros((len(text_units), len(text_units)))
+    for i in range(len(text_units)):
+        for j in range(i+1, len(text_units)):
+            similarities[i][j] = cosine(embeddings[text_units[i]], embeddings[text_units[j]])
+            similarities[j][i] = similarities[i][j]
     
     # build the knowledge graph
     knowledge_graph = []
@@ -53,7 +60,11 @@ def summarize_communities(communities: List[List[int]], text_units: List[str], l
 
 def build_graphraglet(text_units: List[str], llm : LLM, threshold: float = 0.8) -> List[str]:
     """Build the GraphRAGlet object."""
+    logger.info("Building the knowledge graph...")
     knowledge_graph = build_knowledge_graph(text_units, llm, threshold)
+    logger.info("Community detection...")
     communities = community_detection(knowledge_graph)
+    logger.info("Summarizing communities...")
     summaries = summarize_communities(communities, text_units, llm)
+    logger.info("Building GraphRAGlet object...")
     return GraphRAGlet(text_units, summaries, communities, knowledge_graph)

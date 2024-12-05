@@ -12,3 +12,9 @@ dependencies = [
 
 [tool.ruff.lint]
 select = ["all"]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.29.5",
+    "ipython>=8.30.0",
+]

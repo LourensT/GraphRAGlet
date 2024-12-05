@@ -1,1 +1,0 @@
-Text data for the test and evalution of GraphRAGlet.

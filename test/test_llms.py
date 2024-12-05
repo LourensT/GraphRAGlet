@@ -1,15 +1,14 @@
 from sys import path
 path.append("..")
+
 from graphraglet.LLM.LLM import LLM
 from graphraglet.LLM.OAI import OAI
 
-def main():
-    oai = OAI()
-    test_llm(oai)
-    print("LLM test passed.")
+def test_llms():
+    test_one(OAI())
+    print("LLM test passed for OAI.")
 
-
-def test_llm(implementation: LLM, verbose: bool = False):
+def test_one(implementation: LLM, verbose: bool = False):
     some_text = "This is some text."
     embedding = implementation.get_embedding(some_text)
 
@@ -20,7 +19,6 @@ def test_llm(implementation: LLM, verbose: bool = False):
     comsimilarity = implementation.get_similarity(some_text, some_different_text)
     if verbose:
         print(f"Similarity is {comsimilarity}")
-
 
     instruction = "Complete the following text: " + some_text
     completion = implementation.prompt(instruction)
@@ -33,6 +31,6 @@ def test_llm(implementation: LLM, verbose: bool = False):
     if verbose:
         print(f"Summary is {summary}")
 
-
 if __name__ == "__main__":
-    main()
+    test_llms()
+    print("All LLM test passed.")

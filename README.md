@@ -17,3 +17,13 @@ Then, with this augmented knowledge graph, we can implement different query stra
 GraphRAGlet is a minimal adaptation of the GraphRAG package. An expensive step in the process is the building of the knowledge graph. 
 GraphRAGlet addresses this by building the knowledge graph through embeddings instead of extracting entities, relations and facts with an LLM. 
 This is orders of magnitude faster and more efficient.
+
+
+## Dev todo 
+- [ ] Search
+- [ ] set-up evaluations
+- [ ] use proper testing framework
+- [ ] better logging
+- [ ] add an additional LLM
+- [ ] make threshold dynamic based on similarity distribution
+- [ ] Use UMAP to reduce dimensionality of the embeddings

@@ -1,0 +1,7 @@
+Person A is a person. 
+
+Person B is a person.
+
+Peron C is a person.
+
+Person A is friends with person B.
