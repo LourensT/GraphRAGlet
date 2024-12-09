@@ -1,7 +1,9 @@
-Person A is a person. 
+Jan is a secratary. 
 
-Person B is a person.
+Mary is a secratary.
 
-Peron C is a person.
+Bill is a banker.
 
-Person A is friends with person B.
+The secrataries are unionized.
+
+The bankers are not unionized.

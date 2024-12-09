@@ -20,10 +20,8 @@ This is orders of magnitude faster and more efficient.
 
 
 ## Dev todo 
-- [ ] Search
-- [ ] set-up evaluations
-- [ ] use proper testing framework
-- [ ] better logging
-- [ ] add an additional LLM
-- [ ] make threshold dynamic based on similarity distribution
+- [ ] Set up logging
+- [ ] Implement Query
+- [ ] Set-up evaluations and testing
+- [ ] Add support for Groq
 - [ ] Use UMAP to reduce dimensionality of the embeddings

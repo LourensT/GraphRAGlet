@@ -1,5 +1,6 @@
 # %%
 from sys import path
+
 path.append("..")
 
 from graphraglet import build_graphraglet, OAI
@@ -21,33 +22,58 @@ def get_text_units(data_path: str) -> List[str]:
 
     return list(text_units)
 
+
 def clean_dulce_data(text_units: List[str]) -> List[str]:
     """Load the Dulce data."""
     # remove comments
     text_units = [t for t in text_units if not t.startswith("#")]
     return text_units
 
+
 def test_build_graphraglet(data_path: str):
-    
     text_units = get_text_units(data_path)
     llm = OAI()
-    threshold = 0.8
+    sparsity = 0.3
 
-    raglet = build_graphraglet(text_units, llm, threshold)
+    raglet = build_graphraglet(text_units, llm, sparsity)
     return raglet
+
 
 # %%
 if __name__ == "__main__":
-    print(get_text_units("../data/play/play.txt"))
-    # %%
+    # print(get_text_units("../data/play/play.txt"))
+    # raglet = test_build_graphraglet("../data/play/play.txt")
     raglet = test_build_graphraglet("../data/dulce/dulce.txt")
     # %%
     print(raglet.text_units)
     print(raglet.community_summaries)
     print(raglet.communities)
-    print(raglet.graph.nodes)
+    print(raglet.graph.nodes, raglet.graph.edges)
 
     # %% pickle the raglet
-    import pickle
-    with open("raglet_dulce_0.8.pickle", "wb") as f:
-        pickle.dump(raglet, f)  
+    # import pickle
+    # with open("raglet_dulce_0.8.pickle", "wb") as f:
+    #     pickle.dump(raglet, f)
+
+    # %%
+    # import pickle
+
+    # with open("raglet_dulce_0.8.pickle", "rb") as f:
+    #     raglet = pickle.load(f)
+
+    # raglet = KnowledgeGraph(
+    #     raglet.text_units,
+    #     raglet.community_summaries,
+    #     raglet.communities,
+    #     raglet.graph.edges,
+    # )
+    # %%
+    print(raglet.text_units)
+    print(raglet.community_summaries)
+    print(raglet.communities)
+    print(raglet.n_communities)
+
+    raglet.visualize()
+
+
+# %%

@@ -1,12 +1,18 @@
 """The GraphRAGlet package."""
 
+from graphraglet.KnowledgeGraph import KnowledgeGraph
 from graphraglet.build_graphraglet import build_graphraglet
 from graphraglet.query_graphraglet import global_search, local_search, drift_search
 from graphraglet.LLM.OAI import OAI
 
-__all__ = ["build_graphraglet", 
-           "global_search", "local_search", "drift_search", 
-           "OAI"]
+__all__ = [
+    "KnowledgeGraph",
+    "build_graphraglet",
+    "global_search",
+    "local_search",
+    "drift_search",
+    "OAI",
+]
 
 # import logging
 
