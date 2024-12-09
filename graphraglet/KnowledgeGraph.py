@@ -1,23 +1,32 @@
 from typing import List
 import networkx as nx
 
+import logging
+
+logger = logging.getLogger("GraphRAGlet")
+
 class KnowledgeGraph:
     """Class that contains the knowledge graph, summaries, and text units."""
 
-    def __init__(self, text_units: List[str], community_summaries: List[str], communities: List[int], knowledge_graph: List[tuple]) -> None:
+    def __init__(self, text_units: List[str], community_summaries: List[str], communities: List[int], relations: List[tuple]) -> None:
         """Initialize the GraphRAGlet class."""
         self.text_units = text_units
         self.community_summaries = community_summaries
 
         self.communities = communities
         self.n_communities = len(communities)
+
         self.graph = nx.Graph()
-        self.graph.add_edges_from(knowledge_graph)
+        self.graph.add_edges_from(relations)
+
+        logger.info("Built knowledge graph.")
 
     def visualize(self):
         """
         Show interactive visualization of the GraphRAGlet object.
         """
+        logger.info("Visualizing the knowledge graph...")
+
         import matplotlib.pyplot as plt
 
         # create list of colors of length equal to the number of communities

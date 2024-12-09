@@ -14,28 +14,17 @@ __all__ = [
     "OAI",
 ]
 
-# import logging
-
-# # Configure the logging for the whole package
-# # Log to console only INFO, WARNING, ERROR, CRITICAL, not DEBUG
-# logging.basicConfig(
-#     level=logging.DEBUG,  # Set the default logging level
-#     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",  # Format of the log messages
-#     handlers=[
-#         logging.StreamHandler(),  # Log to console
-#         logging.FileHandler("graphraglet.log"),  # Log to a file
-#     ],
-# )
 
 import logging
+import datetime
 
 # Now, create the logger for your package/module
-logger = logging.getLogger("graphRAGlet")
+logger = logging.getLogger("GraphRAGlet")
 
 logger.setLevel(logging.DEBUG)  # Set the default logging level
 
 # Create a file handler to log to a file with DEBUG level
-file_handler = logging.FileHandler("graphRAGlet.log")
+file_handler = logging.FileHandler(f"GraphRAGlet_{datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.log")
 file_handler.setLevel(logging.DEBUG)  # Log all levels to the file
 
 # Create a console handler to log to the console with INFO level
@@ -50,3 +39,10 @@ console_handler.setFormatter(formatter)
 # Add the handlers to the logger
 logger.addHandler(file_handler)
 logger.addHandler(console_handler)
+
+# propogate the logger to the root logger
+logger.propagate = True
+
+# Example log messages
+logger.debug("This is a debug message")
+logger.info("This is an info message")

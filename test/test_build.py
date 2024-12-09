@@ -41,7 +41,6 @@ def test_build_graphraglet(data_path: str):
 
 # %%
 if __name__ == "__main__":
-    # print(get_text_units("../data/play/play.txt"))
     # raglet = test_build_graphraglet("../data/play/play.txt")
     raglet = test_build_graphraglet("../data/dulce/dulce.txt")
     # %%
@@ -50,30 +49,10 @@ if __name__ == "__main__":
     print(raglet.communities)
     print(raglet.graph.nodes, raglet.graph.edges)
 
+    raglet.visualize()
+
     # %% pickle the raglet
     # import pickle
     # with open("raglet_dulce_0.8.pickle", "wb") as f:
     #     pickle.dump(raglet, f)
 
-    # %%
-    # import pickle
-
-    # with open("raglet_dulce_0.8.pickle", "rb") as f:
-    #     raglet = pickle.load(f)
-
-    # raglet = KnowledgeGraph(
-    #     raglet.text_units,
-    #     raglet.community_summaries,
-    #     raglet.communities,
-    #     raglet.graph.edges,
-    # )
-    # %%
-    print(raglet.text_units)
-    print(raglet.community_summaries)
-    print(raglet.communities)
-    print(raglet.n_communities)
-
-    raglet.visualize()
-
-
-# %%
