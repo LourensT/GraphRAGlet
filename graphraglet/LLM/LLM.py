@@ -1,9 +1,10 @@
-
 from typing import List
 from scipy.spatial.distance import cosine
 
+
 class LLM:
     """Interface for LLMs."""
+
     def get_embedding(self, text: str) -> List[float]:
         """Get the embedding of a text."""
         pass
