@@ -18,7 +18,7 @@ class KnowledgeGraph:
         community_summaries: List[str],
         community_summary_embeddings: List[List[float]],
         communities: List[int],
-        relations: List[tuple]
+        relations: List[tuple],
     ) -> None:
         """Initialize the GraphRAGlet class."""
 
@@ -35,10 +35,12 @@ class KnowledgeGraph:
 
         logger.info("Built knowledge graph.")
 
-    def top_k_communities(self, query_embedding: List[float], k: int) -> Tuple[List[str], List[int]]:
+    def top_k_communities(
+        self, query_embedding: List[float], k: int
+    ) -> Tuple[List[str], List[int]]:
         """
         Return the top $k$ most relevant communities
-        
+
         Args:
             List[str]: community summaries
             List[int]: community indices
@@ -46,15 +48,15 @@ class KnowledgeGraph:
         dists = []
         for embed in self.community_embeddings:
             dists.append(cosine(embed, query_embedding))
-        
+
         # sort index
         indices = np.argsort(dists)
 
-
         return [self.community_summaries[i] for i in indices[:k]], indices
 
-        
-    def top_k_in_community(self, query_embedding: List[float], community_index: int, k: int) -> List[str]:
+    def top_k_in_community(
+        self, query_embedding: List[float], community_index: int, k: int
+    ) -> List[str]:
         """
         Return the top $k$ test units within a given community
 
@@ -66,12 +68,11 @@ class KnowledgeGraph:
         dists = []
         for embed in rel_embeddings:
             dists.append(cosine(embed, query_embedding))
-        
+
         # sort index
         indices = np.argsort(dists)
 
         return [rel_text_units[i] for i in indices[:k]]
-
 
     def visualize(self):
         """

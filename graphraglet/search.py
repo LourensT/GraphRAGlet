@@ -10,7 +10,7 @@ logger = logging.getLogger("GraphRAGlet")
 
 def global_search(raglet: KnowledgeGraph, llm: LLM, query: str) -> List[str]:
     """Perform a global search on the Knowledge_graph object."""
-    
+
     query_embedding = llm.get_embedding(query)
 
     # 1. RAG on community summaries

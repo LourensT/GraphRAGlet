@@ -1,12 +1,15 @@
 from sys import path
+
 path.append("..")
 
 from graphraglet.LLM.LLM import LLM
 from graphraglet.LLM.OAI import OAI
 
+
 def test_llms():
     test_one(OAI())
     print("LLM test passed for OAI.")
+
 
 def test_one(implementation: LLM, verbose: bool = False):
     some_text = "This is some text."
@@ -30,6 +33,7 @@ def test_one(implementation: LLM, verbose: bool = False):
     summary = implementation.summarize(longer_text)
     if verbose:
         print(f"Summary is {summary}")
+
 
 if __name__ == "__main__":
     test_llms()
