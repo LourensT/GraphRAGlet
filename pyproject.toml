@@ -13,6 +13,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "datasets>=3.2.0",
     "ipykernel>=6.29.5",
     "ipython>=8.30.0",
 ]

@@ -1,7 +1,7 @@
 from graphraglet.LLM.LLM import LLM
 from graphraglet.KnowledgeGraph import KnowledgeGraph
 
-from typing import List
+from typing import List, Tuple
 from scipy.spatial.distance import cosine
 import networkx as nx
 import numpy as np
@@ -42,6 +42,7 @@ def build_knowledge_graph(
 
     Returns:
         List[tuple]: The list of edges in the knowledge graph.
+        List[List[float]]: The list of the embeddings for each text_unit
     """
 
     # get embeddings for each text unit
@@ -66,7 +67,7 @@ def build_knowledge_graph(
             if similarities[i][j] > threshold:
                 knowledge_graph.append((i, j))
 
-    return knowledge_graph
+    return knowledge_graph, list(embeddings.values())
 
 
 def community_detection(knowledge_graph: List[tuple]) -> List[List[int]]:
@@ -79,15 +80,26 @@ def community_detection(knowledge_graph: List[tuple]) -> List[List[int]]:
 
 def summarize_communities(
     communities: List[List[int]], text_units: List[str], llm: LLM
-) -> List[str]:
-    """Summarize the communities in the knowledge graph."""
+) -> Tuple[List[str], List[List[float]]]:
+    """
+    Summarize the communities in the knowledge graph.
+
+    Returns:
+        List[str]: summaries of the communities
+        List[List[float]]: corresponding embeddings
+    """
+
+    # create summaries for each community
     summaries = []
     for community in communities:
         full_community_text = "\nFile 1: ".join([text_units[i] for i in community])
         summary = llm.summarize(full_community_text)
         summaries.append(summary)
 
-    return summaries
+    # embeddings of summaries
+    comm_embeddings = [llm.get_embedding(com) for com in summaries]
+
+    return summaries, comm_embeddings
 
 
 def build_graphraglet(
@@ -95,10 +107,19 @@ def build_graphraglet(
 ) -> List[str]:
     """Build the GraphRAGlet object."""
     logger.info("Building the knowledge graph...")
-    knowledge_graph = build_knowledge_graph(text_units, llm, threshold)
+    text_unit_relations, text_unit_embeddings = build_knowledge_graph(
+        text_units, llm, threshold
+    )
     logger.info("Community detection...")
-    communities = community_detection(knowledge_graph)
+    communities = community_detection(text_unit_relations)
     logger.info("Summarizing communities...")
-    summaries = summarize_communities(communities, text_units, llm)
+    summaries, summary_embeddings = summarize_communities(communities, text_units, llm)
     logger.info("Building GraphRAGlet object...")
-    return KnowledgeGraph(text_units, summaries, communities, knowledge_graph)
+    return KnowledgeGraph(
+        text_units,
+        text_unit_embeddings,
+        summaries,
+        summary_embeddings,
+        communities,
+        text_unit_relations,
+    )

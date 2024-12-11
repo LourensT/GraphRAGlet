@@ -20,8 +20,14 @@ This is orders of magnitude faster and more efficient.
 
 
 ## Dev todo 
-- [ ] Set up logging
-- [ ] Implement Query
+- [x] Set up logging
+- [ ] Implement Search
+    - [x] Global Search
+        - [ ] parameterize
+    - [ ] Local Search
+    - [ ] Drift Search
 - [ ] Set-up evaluations and testing
-- [ ] Add support for Groq
-- [ ] Use UMAP to reduce dimensionality of the embeddings
+    - [ ] Multihop
+- [ ] Add support for Groq or another LLaMa provider
+- [ ] Use UMAP to reduce dimensionality of the embeddings for relation mining
+- [ ] Parallelization 

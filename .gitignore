@@ -12,5 +12,8 @@ wheels/
 # Logs
 *.log
 
+# Pickled files
+*.pickle
+
 # Environment variables
 .env

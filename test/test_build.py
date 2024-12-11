@@ -41,8 +41,8 @@ def test_build_graphraglet(data_path: str):
 
 # %%
 if __name__ == "__main__":
-    # raglet = test_build_graphraglet("../data/play/play.txt")
-    raglet = test_build_graphraglet("../data/dulce/dulce.txt")
+    raglet = test_build_graphraglet("../data/play/play.txt")
+    # raglet = test_build_graphraglet("../data/dulce/dulce.txt")
     # %%
     print(raglet.text_units)
     print(raglet.community_summaries)
